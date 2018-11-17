@@ -65,7 +65,7 @@ def find_small_in_large(small_images, img,
             #print('INPUT ERROR: %s and/or %s do not exist!' % (small_image_path, large_image_path))
             sys.exit(EX_NOINPUT)
 
-        w, h = template.shape[::-1]
+        w, h = template.shape[: 2]
 
         img2 = img.copy()
         img = img2.copy()
@@ -116,7 +116,7 @@ def find_small_in_image_with_multiple_results(template_gray, img_rgb,
         print(err)
         template = template_gray
 
-    w, h = template.shape[::-1]
+    h, w = template.shape[: 2]
 
     res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
     loc = np.where(res >= threshold)
