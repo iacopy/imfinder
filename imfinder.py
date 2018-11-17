@@ -26,7 +26,7 @@ imread = cv2.imread
 
 
 def bool_find(small_image, large_image,
-              method=cv2.TM_CCOEFF_NORMED, threshold=DEFAULT_THRESHOLD):
+              method=cv2.TM_CCOEFF_NORMED, threshold=DEFAULT_THRESHOLD, **kwargs):
     """
     Utility function, useful if one want to know only *if* an image
     is contained in another one.
@@ -46,7 +46,8 @@ def bool_find(small_image, large_image,
 
 def find_small_in_large(small_images, img,
                         method=cv2.TM_CCOEFF_NORMED,
-                        threshold=DEFAULT_THRESHOLD):
+                        threshold=DEFAULT_THRESHOLD,
+                        **kwargs):
     """
     Perform template matching with given method and return the rect where the small
     image is found, but only if the threshold is reached, else return None.
@@ -86,7 +87,8 @@ def find_small_in_large(small_images, img,
 
 
 def find_small_in_image_with_multiple_results(template_gray, img_rgb,
-                                              threshold=DEFAULT_THRESHOLD):
+                                              threshold=DEFAULT_THRESHOLD,
+                                              highlight=False):
     """
     This is a demo which shows the result of a match template
     search with multiple matches of a single sub image.
@@ -100,7 +102,6 @@ def find_small_in_image_with_multiple_results(template_gray, img_rgb,
 
     small_filename = os.path.split(template_gray)[1]
     large_filename = os.path.split(img_rgb)[1]
-    dst_filename = '{}_in_{}'.format(small_filename, large_filename)
 
     try:
         img_rgb = cv2.imread(img_rgb)
@@ -126,7 +127,9 @@ def find_small_in_image_with_multiple_results(template_gray, img_rgb,
         cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 1)
         yield pt
 
-    cv2.imwrite(dst_filename, img_rgb)  # demo
+    if highlight:
+        dst_filename = '{}_in_{}'.format(small_filename, large_filename)
+        cv2.imwrite(dst_filename, img_rgb)  # demo
 
 
 def main(template_image_path, image_path, **kwargs):
@@ -149,5 +152,5 @@ if __name__ == '__main__':
         print('USAGE ERROR: invalid argument!')
         print('Usage: $ python imfinder.py <small_image_path> <large_image_path>')
     else:
-        exit_code = main(small, large, threshold=0.98)
+        exit_code = main(small, large, threshold=0.98, highlight=True)
     sys.exit(exit_code)
