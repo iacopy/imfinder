@@ -49,7 +49,7 @@ def find_small_in_large(small_images, img,
                         threshold=DEFAULT_THRESHOLD,
                         **kwargs):
     """
-    Perform template matching with given method and return the rect where the small
+    Perform template matching with given method and return the topleft where the small
     image is found, but only if the threshold is reached, else return None.
 
     :param small_images: the "probe" image(s) to search for
@@ -66,8 +66,6 @@ def find_small_in_large(small_images, img,
             #print('INPUT ERROR: %s and/or %s do not exist!' % (small_image_path, large_image_path))
             sys.exit(EX_NOINPUT)
 
-        w, h = template.shape[: 2]
-
         img2 = img.copy()
         img = img2.copy()
 
@@ -80,8 +78,7 @@ def find_small_in_large(small_images, img,
                 top_left = min_loc
             else:
                 top_left = max_loc
-            x, y = top_left
-            yield x, y, w, h
+            yield top_left
         else:
             yield None
 
