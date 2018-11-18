@@ -8,7 +8,8 @@ import sys
 
 
 def cut_image(image_filepath, box, dst_filepath):
-    x_start, y_start, x_stop, y_stop = box
+    x_start, y_start, width, height = box
+    x_stop, y_stop = x_start + width, y_start + height
     image = imread(image_filepath)
     return imwrite(
         dst_filepath,
@@ -18,10 +19,9 @@ def cut_image(image_filepath, box, dst_filepath):
 
 def main():
     image_filepath = sys.argv[1]
-    x, y, width, heigth = [int(val) for val in sys.argv[2:6]]
+    box = [int(val) for val in sys.argv[2:6]]
     dst_filepath = sys.argv[6]
 
-    box = x, y, x + width, y + heigth
     res = cut_image(image_filepath, box, dst_filepath)
     sys.exit(not res)
 
