@@ -1,11 +1,11 @@
-from imdispatcher import dispatch
+from imdispatcher import dispatch_legacy
 
 
 ROOT = 'test'
 
 
-def test_imdispatcher():
-    ret = dispatch(ROOT, 'templates')
+def test_imdispatcher_legacy():
+    ret = dispatch_legacy(ROOT, 'templates')
 
     assert ret['lena.jpg'] == 'template_lena'
     assert ret['road_alert_rotated.jpg'] == 'template_alert_rotated'

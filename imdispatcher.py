@@ -52,7 +52,7 @@ def decide(image_filepath, markers):
             assert "_img.size().height <= _templ.size().height && _img.size().width <= _templ.size().width in function 'matchTemplate'" in str(err)
 
 
-def dispatch(dirpath, markers_dirname='templates'):
+def dispatch_legacy(dirpath, markers_dirname='templates'):
     ret = {}
     if markers_dirname not in os.listdir(dirpath):
         print('ERROR: Please create a "{}" directory with marker images.'.format(markers_dirname))
